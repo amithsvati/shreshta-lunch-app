@@ -2,14 +2,14 @@
 
 A personalized web application to plan healthy, diverse, and fun weekly meals for school and home.
 
-**🌟 Live App:** [https://shreshta-lunch-planner-app.netlify.app](https://shreshta-lunch-planner-app.netlify.app)
+**🌟 Live App:** [https://amithsvati.github.io/shreshta-lunch-app/](https://amithsvati.github.io/shreshta-lunch-app/)
 
 ## ✨ Features
 *   **Weekly Planner**: Visual timetable for Monday to Friday (Snacks, Lunch, Sides).
-*   **Smart Grocery List**: Automatically generates a shopping checklist based on your plan. Orgainzed by category (Produce, Dairy, etc.).
-*   **PDF Downloads**: Download your Weekly Menu and Grocery List as clean PDFs to print or share.
+*   **AI Custom Recipes**: Create your own recipes with AI suggestions (requires free Gemini API key).
+*   **Smart Grocery List**: Automatically generates a shopping checklist based on your plan.
+*   **PDF Downloads**: Download your Weekly Menu and Grocery List as clean PDFs.
 *   **Swap & Customize**: Easily change meals from a curated list of kid-friendly recipes.
-*   **Profile Management**: Track height, weight, and preferences (designed for Shreshta!).
 
 ## 🥘 Cuisines Included
 *   **South Indian** (Curd Rice, Idli, Tomato Rice, Coconut Rice...)
@@ -21,6 +21,7 @@ A personalized web application to plan healthy, diverse, and fun weekly meals fo
 *   React + Vite
 *   Vanilla CSS (Glassmorphism design)
 *   jsPDF (for PDF generation)
+*   Google Gemini API (for AI recipes)
 
 ## 🚀 How to Run Locally
 
@@ -41,8 +42,8 @@ A personalized web application to plan healthy, diverse, and fun weekly meals fo
     ```
 
 ## 📦 Deployment
-This app is optimized for **Netlify**.
+This app is deployed on **GitHub Pages**.
 ```bash
-npm run build
-npx netlify-cli deploy --prod
+npm run deploy
 ```
+
