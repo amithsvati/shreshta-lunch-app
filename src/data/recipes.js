@@ -427,6 +427,29 @@ export const recipes = [
     ],
     tags: ['tangy', 'healthy', 'chat']
   },
+  {
+    id: 'snack-dates-balls',
+    name: 'Dates & Nuts Energy Balls',
+    type: 'snack',
+    cuisine: 'healthy',
+    nutrition: { calories: 120, protein: '3g', fat: '5g', carbs: '18g' },
+    prepTime: 'Prep: 15m | Cook: 0m',
+    videoUrl: 'https://www.youtube.com/results?search_query=Dates+Balls+Recipe+for+Kids',
+    ingredients: ['10-12 Medjool Dates (soft, pitted)', '1/4 cup Almonds', '1/4 cup Cashews', '2 tbsp Desiccated Coconut', '1 tbsp Cocoa Powder (optional)', 'Pinch of Cardamom'],
+    instructions: [
+      'Remove pits from dates. If dates are dry, soak in warm water for 10 mins and drain.',
+      'Dry roast almonds and cashews on low flame for 3-4 mins. Let cool completely.',
+      'Add nuts to a food processor/mixer and pulse until coarsely ground (not powder).',
+      'Add pitted dates, cocoa powder (optional), and cardamom. Process until mixture clumps together.',
+      'Test by pressing a small amount - it should hold shape. If too dry, add 1-2 more dates.',
+      'Wet your palms slightly with water. Take tablespoon-sized portions and roll into balls.',
+      'Roll each ball in desiccated coconut for coating. Press gently so coconut sticks.',
+      'Place on a plate and refrigerate for 30 mins to firm up.',
+      'Store in airtight container in fridge for up to 2 weeks. Natural sweetness, no refined sugar!',
+      'Tip: Let sit at room temperature for 5 mins before serving for best texture.'
+    ],
+    tags: ['no-sugar', 'energy', 'healthy', 'protein']
+  },
   /* --- NEW ADDITIONS (Kerala, TN, North Indian, Continental) --- */
   {
     id: 'lunch-tomato-rice',
