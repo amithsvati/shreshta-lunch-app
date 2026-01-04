@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
 import SwapModal from './SwapModal';
 import RecipeModal from './RecipeModal';
-import AddRecipeModal from './AddRecipeModal';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const SLOTS = ['Snack 1', 'Lunch', 'Lunch Side', 'Snack 2'];
@@ -35,31 +34,6 @@ function WeeklyPlanner({ profile, recipes }) {
 
     const [swapState, setSwapState] = useState(null); // { day, slot, currentId }
     const [viewRecipe, setViewRecipe] = useState(null); // recipe object
-    const [showAddRecipe, setShowAddRecipe] = useState(false);
-    const [addRecipeSlot, setAddRecipeSlot] = useState(null);
-
-    // Custom recipes from localStorage
-    const [customRecipes, setCustomRecipes] = useState(() => {
-        const saved = localStorage.getItem('custom_recipes');
-        return saved ? JSON.parse(saved) : [];
-    });
-
-    // Persist custom recipes
-    useEffect(() => {
-        localStorage.setItem('custom_recipes', JSON.stringify(customRecipes));
-    }, [customRecipes]);
-
-    // Merge built-in recipes with custom recipes
-    const allRecipes = [...recipes, ...customRecipes];
-
-    const handleAddCustomRecipe = (recipe) => {
-        setCustomRecipes(prev => [...prev, recipe]);
-    };
-
-    const handleOpenAddRecipe = (slot) => {
-        setAddRecipeSlot(slot);
-        setShowAddRecipe(true);
-    };
 
     // Reset or load schedule when profile changes
     useEffect(() => {
@@ -267,11 +241,10 @@ function WeeklyPlanner({ profile, recipes }) {
                 <SwapModal
                     isOpen={!!swapState}
                     slot={swapState.slot}
-                    options={allRecipes}
+                    options={recipes}
                     currentId={swapState.currentId}
                     onClose={() => setSwapState(null)}
                     onSave={confirmSwap}
-                    onOpenAddRecipe={handleOpenAddRecipe}
                 />
             )}
 
@@ -281,13 +254,6 @@ function WeeklyPlanner({ profile, recipes }) {
                     onClose={() => setViewRecipe(null)}
                 />
             )}
-
-            <AddRecipeModal
-                isOpen={showAddRecipe}
-                onClose={() => setShowAddRecipe(false)}
-                onAddRecipe={handleAddCustomRecipe}
-                slotType={addRecipeSlot}
-            />
 
             <style jsx>{`
         .planner-header {

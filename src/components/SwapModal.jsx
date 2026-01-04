@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId, onOpenAddRecipe }) {
+function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId }) {
     const [selectedId, setSelectedId] = useState(currentId);
 
     // Sync selectedId when modal opens or currentId changes
@@ -39,12 +39,6 @@ function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId, onO
                     <h3>Change {slot}</h3>
                     <button className="close-btn" onClick={onClose}>&times;</button>
                 </div>
-
-                {onOpenAddRecipe && (
-                    <button className="create-custom-btn" onClick={() => { onClose(); onOpenAddRecipe(slot); }}>
-                        ✨ Create Custom Recipe with AI
-                    </button>
-                )}
 
                 <div className="options-list">
                     {filteredOptions.length > 0 ? filteredOptions.map(option => (
