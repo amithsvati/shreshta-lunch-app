@@ -1,10 +1,11 @@
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RecipeCard from './RecipeCard';
 import SwapModal from './SwapModal';
 import RecipeModal from './RecipeModal';
+import { saveScheduleToCloud, getScheduleFromCloud, subscribeToSchedule } from '../utils/firebase';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const SLOTS = ['Snack 1', 'Lunch', 'Lunch Side', 'Snack 2'];
@@ -17,23 +18,55 @@ const INITIAL_SCHEDULE = {
     Friday: { 'Snack 1': 'snack-carrot-sticks', 'Lunch': 'lunch-chapati-roll', 'Lunch Side': 'side-chicken-fry', 'Snack 2': 'snack-corn-chat' },
 };
 
-function WeeklyPlanner({ profile, recipes }) {
+function WeeklyPlanner({ profile, recipes, user }) {
     const [schedule, setSchedule] = useState(() => {
-        // Check if we have a saved schedule, but migration might be needed if structure changed
         const saved = localStorage.getItem(`schedule_${profile.id}`);
         if (saved) {
             const parsed = JSON.parse(saved);
-            // Simple check if 'Lunch Side' exists in Monday, if not, merge with INITIAL
             if (!parsed.Monday['Lunch Side']) {
-                return INITIAL_SCHEDULE; // Reset to get new slots, or could merge intelligently
+                return INITIAL_SCHEDULE;
             }
             return parsed;
         }
         return INITIAL_SCHEDULE;
     });
 
-    const [swapState, setSwapState] = useState(null); // { day, slot, currentId }
-    const [viewRecipe, setViewRecipe] = useState(null); // recipe object
+    const [swapState, setSwapState] = useState(null);
+    const [viewRecipe, setViewRecipe] = useState(null);
+    const [syncStatus, setSyncStatus] = useState('');
+    const isLoadingFromCloud = useRef(false);
+
+    // Load from cloud when user signs in
+    useEffect(() => {
+        if (user) {
+            isLoadingFromCloud.current = true;
+            setSyncStatus('Loading...');
+            getScheduleFromCloud(user.uid, profile.id).then((cloudSchedule) => {
+                if (cloudSchedule && cloudSchedule.Monday) {
+                    setSchedule(cloudSchedule);
+                    localStorage.setItem(`schedule_${profile.id}`, JSON.stringify(cloudSchedule));
+                }
+                setSyncStatus('Synced ✓');
+                setTimeout(() => {
+                    isLoadingFromCloud.current = false;
+                    setSyncStatus('');
+                }, 1000);
+            });
+        }
+    }, [user, profile.id]);
+
+    // Subscribe to real-time updates when logged in
+    useEffect(() => {
+        if (user) {
+            const unsubscribe = subscribeToSchedule(user.uid, profile.id, (cloudSchedule) => {
+                if (cloudSchedule && !isLoadingFromCloud.current) {
+                    setSchedule(cloudSchedule);
+                    localStorage.setItem(`schedule_${profile.id}`, JSON.stringify(cloudSchedule));
+                }
+            });
+            return () => unsubscribe();
+        }
+    }, [user, profile.id]);
 
     // Reset or load schedule when profile changes
     useEffect(() => {
@@ -50,10 +83,14 @@ function WeeklyPlanner({ profile, recipes }) {
         }
     }, [profile.id]);
 
-    // Persist schedule
+    // Persist schedule to localStorage and cloud
     useEffect(() => {
         localStorage.setItem(`schedule_${profile.id}`, JSON.stringify(schedule));
-    }, [schedule, profile.id]);
+        // Also save to cloud if user is logged in
+        if (user && !isLoadingFromCloud.current) {
+            saveScheduleToCloud(user.uid, profile.id, schedule);
+        }
+    }, [schedule, profile.id, user]);
 
     const handleSwap = (day, slot) => {
         setSwapState({ day, slot, currentId: schedule[day][slot] });

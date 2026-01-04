@@ -1,13 +1,24 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WeeklyPlanner from './components/WeeklyPlanner';
 import ChildProfile from './components/ChildProfile';
 import GroceryListModal from './components/GroceryListModal';
+import AuthButton from './components/AuthButton';
 import { recipes as recipeData } from './data/recipes';
+import { auth, onAuthStateChanged } from './utils/firebase';
 
 function App() {
   const [currentView, setCurrentView] = useState('planner'); // 'planner', 'profile', 'grocery'
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Listen for auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const [profiles, setProfiles] = useState(() => {
     const saved = localStorage.getItem('profiles');
@@ -84,9 +95,12 @@ function App() {
           </div>
         </div>
 
-        <div className="profile-pill">
-          <span className="avatar">{activeProfile.avatar}</span>
-          <span className="name">{activeProfile.name}</span>
+        <div className="navbar-right">
+          <AuthButton user={user} />
+          <div className="profile-pill">
+            <span className="avatar">{activeProfile.avatar}</span>
+            <span className="name">{activeProfile.name}</span>
+          </div>
         </div>
       </nav>
 
@@ -95,6 +109,7 @@ function App() {
           <WeeklyPlanner
             profile={activeProfile}
             recipes={recipeData}
+            user={user}
           />
         )}
         {currentView === 'profile' && (
