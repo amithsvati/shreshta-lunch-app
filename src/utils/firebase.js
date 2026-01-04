@@ -1,6 +1,6 @@
 // Firebase configuration for Shreshta Lunch App
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, onSnapshot } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -18,14 +18,42 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Auth functions
+// Detect if mobile
+const isMobile = () => /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+// Auth functions - Use redirect on mobile, popup on desktop
 export const signInWithGoogle = async () => {
     try {
-        const result = await signInWithPopup(auth, googleProvider);
-        return result.user;
+        if (isMobile()) {
+            // Mobile: use redirect (popup blockers won't interfere)
+            await signInWithRedirect(auth, googleProvider);
+        } else {
+            // Desktop: use popup
+            const result = await signInWithPopup(auth, googleProvider);
+            return result.user;
+        }
     } catch (error) {
         console.error('Sign in error:', error);
-        throw error;
+        // Fallback to redirect if popup fails
+        if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
+            await signInWithRedirect(auth, googleProvider);
+        } else {
+            throw error;
+        }
+    }
+};
+
+// Handle redirect result (for mobile)
+export const handleRedirectResult = async () => {
+    try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+            return result.user;
+        }
+        return null;
+    } catch (error) {
+        console.error('Redirect result error:', error);
+        return null;
     }
 };
 

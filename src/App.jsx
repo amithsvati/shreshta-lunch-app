@@ -5,12 +5,17 @@ import ChildProfile from './components/ChildProfile';
 import GroceryListModal from './components/GroceryListModal';
 import AuthButton from './components/AuthButton';
 import { recipes as recipeData } from './data/recipes';
-import { auth, onAuthStateChanged } from './utils/firebase';
+import { auth, onAuthStateChanged, handleRedirectResult } from './utils/firebase';
 
 function App() {
   const [currentView, setCurrentView] = useState('planner'); // 'planner', 'profile', 'grocery'
   const [menuOpen, setMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
+
+  // Handle redirect result for mobile sign-in
+  useEffect(() => {
+    handleRedirectResult();
+  }, []);
 
   // Listen for auth state changes
   useEffect(() => {
