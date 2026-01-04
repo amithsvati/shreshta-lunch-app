@@ -87,11 +87,17 @@ function AddRecipeModal({ isOpen, onClose, onAddRecipe, slotType }) {
                                     type="password"
                                     value={apiKeyInput}
                                     onChange={(e) => setApiKeyInput(e.target.value)}
-                                    placeholder="Paste your API key here..."
+                                    placeholder="Paste your API token here..."
                                 />
                                 <button onClick={handleSaveApiKey}>Save</button>
                             </div>
                         </div>
+                    )}
+
+                    {!showApiKeyInput && getApiKey() && (
+                        <button className="change-key-btn" onClick={() => setShowApiKeyInput(true)}>
+                            🔑 Change API Token
+                        </button>
                     )}
 
                     <div className="input-section">
@@ -304,6 +310,20 @@ function AddRecipeModal({ isOpen, onClose, onAddRecipe, slotType }) {
                     }
                     .add-btn:hover {
                         background: #0063CC;
+                    }
+                    .change-key-btn {
+                        background: none;
+                        border: 1px solid #ccc;
+                        padding: 0.4rem 0.8rem;
+                        border-radius: 8px;
+                        font-size: 0.8rem;
+                        color: #666;
+                        cursor: pointer;
+                        align-self: flex-start;
+                    }
+                    .change-key-btn:hover {
+                        border-color: var(--primary);
+                        color: var(--primary);
                     }
                 `}</style>
             </div>
