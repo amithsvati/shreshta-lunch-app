@@ -1,5 +1,6 @@
 {
   "name": "shreshta-app",
+  "description": "A personalized planning app for healthy kids' lunches and snacks, featuring recipes, grocery lists, and PDF exports.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
