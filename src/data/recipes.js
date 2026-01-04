@@ -10,11 +10,13 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Curd+Rice+Recipe+for+Kids',
     ingredients: ['1 cup Rice (mushed)', '1.5 cups Curd (Yogurt)', '2 tbsp Milk', 'Salt', 'Carrot (grated) - optional', 'Coriander'],
     instructions: [
-      '1. Cook rice until soft and mushy.',
-      '2. Mix with fresh curd and milk (milk prevents souring).',
-      '3. Add grated carrot and coriander for color.',
-      '4. Temper with mustard seeds if liked, else serve plain.',
-      '5. Packing Tip: Add a few pomegranate seeds for sweetness.'
+      'Wash 1 cup of rice and cook with 2.5 cups water until very soft and mushy (about 15 mins). Let it cool completely.',
+      'In a large bowl, add the cooled rice. Mash gently with a spoon or your hands.',
+      'Add 1.5 cups fresh curd (room temperature) and 2 tbsp milk. The milk keeps it from getting sour.',
+      'Add salt to taste and mix everything well until creamy.',
+      'For extra nutrition, fold in finely grated carrot and chopped coriander leaves.',
+      'Optional: Heat 1 tsp oil, add mustard seeds, curry leaves, and pour over the rice.',
+      'Packing Tip: Add pomegranate seeds or grapes on top for a sweet surprise!'
     ],
     tags: ['probiotic', 'cooling', 'easy']
   },
@@ -28,11 +30,13 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Paneer+Bhurji+for+Kids',
     ingredients: ['2 Chapatis', '100g Paneer (crumbled)', '1 small Onion', '1 Tomato', 'Turmeric', 'Salt', 'Butter'],
     instructions: [
-      '1. Make soft chapatis with ghee.',
-      '2. Sauté chopped onions and tomatoes in butter.',
-      '3. Add crumbled paneer, turmeric, and salt.',
-      '4. Cook for 2 mins. Don\'t overcook paneer.',
-      '5. Roll paneer inside chapati or pack separately.'
+      'For Chapatis: Mix 1 cup whole wheat flour with water and a pinch of salt. Knead into soft dough. Rest for 10 mins.',
+      'Divide into 6 balls, roll each into thin circles. Cook on hot tawa with ghee until brown spots appear on both sides.',
+      'For Paneer Bhurji: Heat 1 tbsp butter in a pan. Add finely chopped onion and sauté until golden (3-4 mins).',
+      'Add chopped tomato and cook until soft and mushy.',
+      'Crumble 100g paneer with your hands (smaller pieces = better for kids). Add to pan with turmeric and salt.',
+      'Cook on medium heat for just 2 minutes. Do not overcook or paneer becomes rubbery.',
+      'Serve paneer bhurji with warm chapatis. Can roll it inside or pack separately.'
     ],
     tags: ['protein-rich', 'calcium', 'filling']
   },
@@ -46,11 +50,14 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Mini+Idli+Sambar+Recipe',
     ingredients: ['15 Mini Idlis', '1 cup Mild Sambar', '1 tbsp Ghee'],
     instructions: [
-      '1. Steam mini idlis.',
-      '2. Make mild sambar with less spice and more dal/veggies.',
-      '3. Dip idlis in sambar bowl or pack sambar separately.',
-      '4. Drizzle generic amount of Ghee on top.',
-      '5. Tip: Mini idlis occupy kids for longer time!'
+      'For Idli Batter: Use store-bought batter or fermented rice-urad batter. Grease mini idli molds with oil.',
+      'Pour batter into each mold. Steam in idli steamer or pressure cooker (without whistle) for 8-10 mins.',
+      'Test with toothpick - if it comes out clean, idlis are done. Let cool slightly before removing.',
+      'For Sambar: Pressure cook 1/4 cup toor dal with 1 cup water (2 whistles). Mash well.',
+      'In a pan, add chopped carrots, beans, drumstick. Add 1 cup water and cook until soft.',
+      'Add mashed dal, 1 tsp sambar powder, salt, and tamarind paste. Use less spice for kids.',
+      'Simmer for 5 mins. Temper with mustard, curry leaves in oil. Pour over sambar.',
+      'Drizzle generous ghee over idlis. Pack sambar in leak-proof container.'
     ],
     tags: ['steamed', 'healthy', 'traditional']
   },
@@ -251,9 +258,12 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Vegetable+Sticks+for+Kids+Lunchbox',
     ingredients: ['1 Carrot', '1 Cucumber', 'Hummus or Yogurt Dip (optional)'],
     instructions: [
-      '1. Peel and cut veggies into finger-length sticks.',
-      '2. Keep them crunchy.',
-      '3. Pack a small container of dip if desired.'
+      'Wash and peel 1 carrot. Cut lengthwise into quarters, then into finger-length sticks (about 3 inches).',
+      'Wash cucumber. You can peel or leave skin on. Cut into similar sized sticks.',
+      'Soak the cut veggies in cold water for 10 mins to make them extra crunchy.',
+      'Drain well and pat dry with paper towel before packing.',
+      'For dip: Mix 2 tbsp yogurt with pinch of salt and cumin. Pack separately.',
+      'Pro Tip: Keep a damp paper towel in the box to maintain crunchiness until lunch.'
     ],
     tags: ['crunchy', 'vitamins', 'raw']
   },
@@ -267,10 +277,13 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Fruit+Salad+Design+Ideas',
     ingredients: ['Apple', 'Banana', 'Pomegranate', 'Grapes', 'Honey (optional)'],
     instructions: [
-      '1. Chop fruits into bite sizes.',
-      '2. Mix together.',
-      '3. Squeeze little orange juice to prevent apples browning.',
-      '4. Use colorful fork.'
+      'Wash all fruits thoroughly. Use seasonal fruits that are sweet and ripe.',
+      'Cut apple into small cubes (remove core). Dip in lemon water to prevent browning.',
+      'Slice banana into rounds. Cut grapes in half for younger kids (choking safety).',
+      'Scoop out pomegranate seeds carefully. Mix all fruits in a bowl.',
+      'Squeeze a little orange juice or add a drizzle of honey for extra sweetness.',
+      'Pack in a container that seals well. Add a colorful fork for fun!',
+      'For school: Prepare fruits but keep banana whole, slice just before eating.'
     ],
     tags: ['sweet', 'natural', 'antioxidants']
   },
@@ -284,11 +297,13 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Roasted+Makhana+Recipe',
     ingredients: ['2 cups Phool Makhana (Lotus Seeds)', '1 tbsp Ghee', '1/4 tsp Turmeric', 'Salt', 'Pinch of Pepper'],
     instructions: [
-      '1. Heat ghee in a wide heavy-bottom pan.',
-      '2. Add makhana and roast on low flame for 7-10 mins.',
-      '3. Check crunchiness by crushing one.',
-      '4. Add salt, turmeric, pepper.',
-      '5. Cool and store in airtight box.'
+      'Heat 1 tbsp ghee in a large, wide pan on low flame. The wide surface helps even roasting.',
+      'Add 2 cups makhana (lotus seeds) and spread in single layer.',
+      'Roast on LOW flame for 7-10 minutes, stirring frequently to avoid burning.',
+      'Test crunchiness by pressing one makhana - it should crumble easily when done.',
+      'Turn off heat. Add salt, turmeric, and a pinch of pepper while still warm.',
+      'Toss well to coat evenly. Let cool completely before storing.',
+      'Store in airtight container. Stays fresh for 2 weeks. Great protein-rich alternative to chips!'
     ],
     tags: ['protein', 'crunchy', 'light']
   },
@@ -302,10 +317,13 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Boiled+Kala+Chana+Chaat',
     ingredients: ['1/2 cup Kala Chana (soaked overnight)', 'Salt', 'Lemon', 'Chaats Masala'],
     instructions: [
-      '1. Pressure cook soaked chana with salt for 4 whistles.',
-      '2. Drain water.',
-      '3. Toss with little lemon juice and chat masala.',
-      '4. Very high protein/iron snack.'
+      'Night Before: Wash 1/2 cup black chana (kala chana) and soak in 2 cups water overnight (8+ hours).',
+      'Next morning: Drain soaked chana, add to pressure cooker with 1.5 cups fresh water and salt.',
+      'Pressure cook for 4-5 whistles until chana is soft but not mushy. Drain excess water.',
+      'Transfer to a bowl. Add squeeze of lemon juice (about 1 tsp).',
+      'Sprinkle chat masala and toss well. Add finely chopped onion and coriander if desired.',
+      'Pack warm or at room temperature. This is an iron and protein powerhouse!',
+      'Storage Tip: Cook in bulk and refrigerate. Warm up portions as needed.'
     ],
     tags: ['iron-rich', 'protein', 'filling']
   },
@@ -319,11 +337,15 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Kids+Poha+Recipe',
     ingredients: ['1 cup Poha (Flattened rice)', 'Onion', 'Potato', 'Peanuts', 'Turmeric'],
     instructions: [
-      '1. Rinse poha and drain.',
-      '2. Fry peanuts, onion, and potato cubes.',
-      '3. Add turmeric and poha.',
-      '4. Steam for 2 mins covered.',
-      '5. Add lemon and coriander.'
+      'Place 1 cup poha in a colander. Rinse gently under running water for 30 seconds.',
+      'Let it sit for 5 minutes to absorb water and soften. Do not over-soak or it becomes mushy.',
+      'Heat 2 tbsp oil in a pan. Add peanuts and fry until golden. Remove and set aside.',
+      'In same oil, add mustard seeds. When they splutter, add chopped onion and diced potato.',
+      'Cover and cook potatoes on medium heat for 5-7 mins until soft.',
+      'Add turmeric, salt, green chili (optional for kids), and mix well.',
+      'Add the drained poha and toss gently. Sprinkle 1 tbsp water if too dry.',
+      'Cover and steam for 2 mins on low heat. Add fried peanuts, lemon juice, and coriander.',
+      'Serve warm with a side of curd. Packs well for 2-3 hours in lunchbox.'
     ],
     tags: ['light', 'breakfast-snack']
   },
@@ -337,12 +359,14 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Ragi+Cookies+Recipe+Healthy',
     ingredients: ['Ragi Flour', 'Wheat Flour', 'Jaggery', 'Butter', 'Cardamom'],
     instructions: [
-      '1. Cream butter and jaggery powder.',
-      '2. Add flours and cardamom.',
-      '3. Form dough (add milk if needed).',
-      '4. Shape into flat cookies.',
-      '5. Bake at 180°C for 15 mins.',
-      '6. Store in jar.'
+      'In a bowl, cream 50g soft butter with 3 tbsp powdered jaggery until fluffy.',
+      'Add 1/4 cup ragi flour, 1/4 cup wheat flour, and a pinch of cardamom powder.',
+      'Mix to form a soft dough. Add 1 tbsp milk if dough is too crumbly.',
+      'Preheat oven to 180°C (350°F). Line a baking tray with parchment paper.',
+      'Take small portions of dough, roll into balls, then flatten into cookie shapes.',
+      'Place on tray with space between each. Bake for 12-15 mins until edges turn golden.',
+      'Cool on tray for 5 mins, then transfer to wire rack. They crisp up as they cool.',
+      'Store in airtight container for up to 2 weeks. Great calcium-rich treat for kids!'
     ],
     tags: ['baked', 'sweet', 'calcium']
   },
@@ -374,11 +398,14 @@ export const recipes = [
     videoUrl: 'https://www.youtube.com/results?search_query=Butter+Sweet+Corn+Recipe+Cup+Corn',
     ingredients: ['1 cup Sweet Corn Kernels (Frozen or Fresh)', '1 tbsp Butter', 'Salt', 'Pinch of Pepper'],
     instructions: [
-      '1. Steam corn kernels for 10 mins until tender.',
-      '2. Drain excess water.',
-      '3. Immediately toss with butter, salt, and pepper while hot.',
-      '4. Butter melts and coats the corn.',
-      '5. Pack in a thermal container to keep warm.'
+      'If using frozen corn: No need to thaw. If using fresh: Remove kernels from cob.',
+      'Boil 2 cups water in a pot. Add corn kernels and boil for 8-10 mins until tender.',
+      'Alternatively, steam in a steamer basket for 10 mins for better nutrition retention.',
+      'Drain all water completely. Transfer hot corn to a bowl.',
+      'Add 1 tbsp butter immediately - it melts beautifully over hot corn.',
+      'Add salt and a tiny pinch of black pepper (optional). Toss well to coat evenly.',
+      'For school: Pack in a thermal/insulated container to keep warm until snack time.',
+      'Variation: Add a squeeze of lemon and chaat masala for tangy corn chaat!'
     ],
     tags: ['kids-favorite', 'easy', 'fiber']
   },
