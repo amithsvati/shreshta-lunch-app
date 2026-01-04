@@ -1,7 +1,7 @@
 // Hugging Face API utility for recipe suggestions
 // Free tier available at https://huggingface.co/settings/tokens
 
-const HF_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3';
+const HF_API_URL = 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta';
 
 export const getApiKey = () => localStorage.getItem('hf_api_key') || '';
 export const setApiKey = (key) => localStorage.setItem('hf_api_key', key);
