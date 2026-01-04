@@ -80,7 +80,7 @@ function AddRecipeModal({ isOpen, onClose, onAddRecipe, slotType }) {
                     {showApiKeyInput && (
                         <div className="api-key-section">
                             <p className="api-info">
-                                🔑 Enter your free <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Google Gemini API Key</a>
+                                🔑 Enter your free <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noopener noreferrer">Hugging Face API Token</a>
                             </p>
                             <div className="api-key-input-row">
                                 <input

@@ -1,10 +1,10 @@
-// Gemini API utility for recipe suggestions
-// User needs to provide their own API key (stored in localStorage)
+// Hugging Face API utility for recipe suggestions
+// Free tier available at https://huggingface.co/settings/tokens
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-002:generateContent';
+const HF_API_URL = 'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3';
 
-export const getApiKey = () => localStorage.getItem('gemini_api_key') || '';
-export const setApiKey = (key) => localStorage.setItem('gemini_api_key', key);
+export const getApiKey = () => localStorage.getItem('hf_api_key') || '';
+export const setApiKey = (key) => localStorage.setItem('hf_api_key', key);
 
 export async function generateRecipeSuggestion(dishName) {
     const apiKey = getApiKey();
@@ -13,50 +13,37 @@ export async function generateRecipeSuggestion(dishName) {
         throw new Error('API_KEY_MISSING');
     }
 
-    const prompt = `You are a nutritionist specializing in healthy kids' meals (ages 4-10).
+    const prompt = `<s>[INST] You are a nutritionist specializing in healthy kids' meals (ages 4-10).
 
-Given the dish name: "${dishName}"
+Create a kid-friendly recipe for: "${dishName}"
 
-Create a kid-friendly version with the following JSON structure:
+Return ONLY a valid JSON object with this exact structure (no markdown, no explanation):
 {
-  "name": "Kid-friendly name for the dish",
-  "type": "lunch" or "snack" or "lunch_side",
+  "name": "Kid-friendly name",
+  "type": "lunch",
   "cuisine": "cuisine type",
-  "nutrition": {
-    "calories": number,
-    "protein": "Xg",
-    "fat": "Xg", 
-    "carbs": "Xg"
-  },
-  "prepTime": "Prep: Xm | Cook: Xm",
-  "ingredients": ["ingredient 1", "ingredient 2", ...],
-  "instructions": ["Step 1 without numbering", "Step 2 without numbering", ...],
-  "tags": ["tag1", "tag2"],
-  "videoUrl": "https://www.youtube.com/results?search_query=DISH_NAME+recipe+for+kids"
+  "nutrition": {"calories": 250, "protein": "8g", "fat": "6g", "carbs": "35g"},
+  "prepTime": "Prep: 10m | Cook: 15m",
+  "ingredients": ["ingredient 1", "ingredient 2"],
+  "instructions": ["Step without number", "Another step"],
+  "tags": ["healthy", "easy"]
 }
 
-Important:
-- Make it healthy and appealing for children
-- Use mild spices
-- Include vegetables where possible
-- Keep portions kid-sized
-- Instructions should NOT have step numbers (they will be added automatically)
-
-Return ONLY valid JSON, no markdown or explanation.`;
+Make it healthy, use mild spices, kid-sized portions. Return ONLY the JSON. [/INST]</s>`;
 
     try {
-        const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+        const response = await fetch(HF_API_URL, {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${apiKey}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: prompt }]
-                }],
-                generationConfig: {
+                inputs: prompt,
+                parameters: {
+                    max_new_tokens: 800,
                     temperature: 0.7,
-                    maxOutputTokens: 1024,
+                    return_full_text: false
                 }
             })
         });
@@ -66,34 +53,36 @@ Return ONLY valid JSON, no markdown or explanation.`;
             if (response.status === 401 || response.status === 403) {
                 throw new Error('INVALID_API_KEY');
             }
-            throw new Error(errorData.error?.message || 'API request failed');
+            if (errorData.error && errorData.error.includes('loading')) {
+                throw new Error('Model is loading. Please wait 20 seconds and try again.');
+            }
+            throw new Error(errorData.error || 'API request failed');
         }
 
         const data = await response.json();
-        const textContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        let textContent = data[0]?.generated_text || data.generated_text || '';
 
         if (!textContent) {
             throw new Error('No response from AI');
         }
 
-        // Parse JSON from response (handle potential markdown wrapping)
-        let jsonStr = textContent.trim();
-        if (jsonStr.startsWith('```json')) {
-            jsonStr = jsonStr.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-        } else if (jsonStr.startsWith('```')) {
-            jsonStr = jsonStr.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        // Extract JSON from response
+        const jsonMatch = textContent.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) {
+            throw new Error('Could not parse recipe. Please try again.');
         }
 
-        const recipe = JSON.parse(jsonStr);
+        const recipe = JSON.parse(jsonMatch[0]);
 
         // Generate unique ID
         recipe.id = `custom-${Date.now()}`;
         recipe.isCustom = true;
+        recipe.videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(dishName)}+recipe+for+kids`;
 
         return recipe;
 
     } catch (error) {
-        console.error('Gemini API Error:', error);
+        console.error('Hugging Face API Error:', error);
         throw error;
     }
 }
