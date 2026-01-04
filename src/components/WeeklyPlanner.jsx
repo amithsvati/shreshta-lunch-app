@@ -75,11 +75,14 @@ function WeeklyPlanner({ profile, recipes }) {
     const downloadMenuPDF = () => {
         const doc = new jsPDF();
 
-        doc.setFontSize(18);
+        // PAGE 1: Timetable
+        doc.setFontSize(22);
+        doc.setTextColor(0, 122, 255); // System Blue
         doc.text(`${profile.name}'s Weekly Menu`, 14, 20);
 
+        doc.setTextColor(60, 60, 67); // System Gray
         doc.setFontSize(12);
-        doc.text('A healthy and balanced plan for school & home.', 14, 28);
+        doc.text('A balanced plan for energy & happiness.', 14, 28);
 
         const tableBody = DAYS.map(day => {
             const row = [day];
@@ -95,11 +98,101 @@ function WeeklyPlanner({ profile, recipes }) {
             startY: 35,
             head: [['Day', ...SLOTS]],
             body: tableBody,
-            headStyles: { fillColor: [255, 107, 107] }, // Primary color roughly
-            theme: 'grid'
+            headStyles: { fillColor: [0, 122, 255] }, // System Blue
+            theme: 'grid',
+            styles: { font: "helvetica" }
         });
 
-        doc.save(`${profile.name}_Weekly_Menu.pdf`);
+        // PAGE 2+: Recipe Details
+        const usedRecipeIds = new Set();
+        DAYS.forEach(day => {
+            SLOTS.forEach(slot => {
+                if (schedule[day][slot]) usedRecipeIds.add(schedule[day][slot]);
+            });
+        });
+
+        const uniqueRecipes = Array.from(usedRecipeIds).map(id => getRecipe(id)).filter(r => r);
+
+        if (uniqueRecipes.length > 0) {
+            doc.addPage();
+            doc.setFontSize(18);
+            doc.setTextColor(0, 122, 255);
+            doc.text("Recipes & Instructions", 14, 20);
+
+            let yPos = 30;
+
+            uniqueRecipes.forEach((recipe, index) => {
+                if (yPos > 240) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+
+                doc.setFontSize(14);
+                doc.setTextColor(0);
+                doc.setFont(undefined, 'bold');
+                doc.text(`${index + 1}. ${recipe.name}`, 14, yPos);
+                doc.setFont(undefined, 'normal');
+                yPos += 7;
+
+                doc.setFontSize(10);
+                doc.setTextColor(100);
+
+                // Meta info
+                const nutritionStr = recipe.nutrition ? Object.entries(recipe.nutrition)
+                    .map(([k, v]) => `${k.charAt(0).toUpperCase() + k.slice(1)}: ${v}`)
+                    .join(' • ') : 'Nutrition info unavailable';
+
+                doc.text(`${recipe.prepTime || '15 mins'}  |  ${recipe.type === 'lunch' ? 'Lunch Main' : recipe.type === 'lunch_side' ? 'Side Dish' : 'Snack'}`, 14, yPos);
+                yPos += 5;
+                doc.text(nutritionStr, 14, yPos);
+                yPos += 5;
+
+                if (recipe.videoUrl) {
+                    doc.setTextColor(0, 122, 255);
+                    doc.textWithLink('Watch Video Tutorial ▶', 14, yPos, { url: recipe.videoUrl });
+                    doc.setTextColor(0);
+                    yPos += 7;
+                }
+
+                // Ingredients
+                doc.setFont(undefined, 'bold');
+                doc.text('Ingredients:', 14, yPos);
+                doc.setFont(undefined, 'normal');
+                yPos += 5;
+                const ingText = recipe.ingredients ? recipe.ingredients.join(', ') : 'No ingredients listed';
+                const ingLines = doc.splitTextToSize(ingText, 180);
+                doc.text(ingLines, 14, yPos);
+                yPos += (ingLines.length * 4) + 2;
+
+                // Instructions
+                doc.setFont(undefined, 'bold');
+                doc.text('Instructions:', 14, yPos);
+                doc.setFont(undefined, 'normal');
+                yPos += 5;
+
+                if (recipe.instructions && recipe.instructions.length > 0) {
+                    recipe.instructions.forEach(inst => {
+                        const instLines = doc.splitTextToSize(inst, 180);
+                        if (yPos + (instLines.length * 5) > 280) {
+                            doc.addPage();
+                            yPos = 20;
+                        }
+                        doc.text(instLines, 14, yPos);
+                        yPos += (instLines.length * 4) + 1;
+                    });
+                } else {
+                    doc.text("No instructions available.", 14, yPos);
+                    yPos += 5;
+                }
+
+                yPos += 10;
+                doc.setDrawColor(200);
+                doc.line(14, yPos, 196, yPos);
+                yPos += 10;
+            });
+        }
+
+        doc.save(`${profile.name}_Weekly_Guide.pdf`);
     };
 
     return (
@@ -177,19 +270,21 @@ function WeeklyPlanner({ profile, recipes }) {
             align-items: center;
             gap: 0.5rem;
         }
+        /* Buttons are now handled globally, but here are local adjustments if needed */
         .pdf-btn {
-            background: var(--secondary);
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
             transition: transform 0.2s;
+            font-weight: 600;
         }
         .pdf-btn:hover {
             transform: scale(1.05);
-            background: var(--secondary-dark);
+            background: var(--primary-light);
         }
         .timetable {
           display: grid;
@@ -198,17 +293,17 @@ function WeeklyPlanner({ profile, recipes }) {
         }
         .day-column {
           padding: 1rem;
-          background: rgba(255,255,255,0.6);
+          /* Glass panel style inherited from global */
           min-width: 220px;
         }
         .day-header {
           text-align: center;
-          font-weight: 800;
+          font-weight: 700;
           color: var(--primary);
           margin-bottom: 1rem;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 0.5px;
         }
         .slots {
           display: flex;
@@ -223,15 +318,16 @@ function WeeklyPlanner({ profile, recipes }) {
             opacity: 0.9;
         }
         .slot-side .slot-label {
-            color: var(--secondary-dark);
+            color: var(--secondary);
         }
         .slot-label {
-          font-size: 0.75rem;
+          font-size: 0.7rem;
           color: var(--text-light);
           text-transform: uppercase;
           font-weight: 700;
-          margin-bottom: 0.2rem;
+          margin-bottom: 0.3rem;
           display: block;
+          letter-spacing: 0.5px;
         }
         .empty-slot {
             border: 2px dashed #ccc;
@@ -240,10 +336,11 @@ function WeeklyPlanner({ profile, recipes }) {
             border-radius: 12px;
             cursor: pointer;
             color: #888;
+            font-size: 0.9rem;
         }
         .empty-slot:hover {
-            border-color: var(--secondary);
-            color: var(--secondary);
+            border-color: var(--primary);
+            color: var(--primary);
         }
       `}</style>
         </div>
