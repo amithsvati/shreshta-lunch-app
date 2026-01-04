@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId }) {
+function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId, onOpenAddRecipe }) {
     const [selectedId, setSelectedId] = useState(currentId);
 
     // Sync selectedId when modal opens or currentId changes
@@ -40,6 +40,12 @@ function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId }) {
                     <button className="close-btn" onClick={onClose}>&times;</button>
                 </div>
 
+                {onOpenAddRecipe && (
+                    <button className="create-custom-btn" onClick={() => { onClose(); onOpenAddRecipe(slot); }}>
+                        ✨ Create Custom Recipe with AI
+                    </button>
+                )}
+
                 <div className="options-list">
                     {filteredOptions.length > 0 ? filteredOptions.map(option => (
                         <label
@@ -54,7 +60,7 @@ function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId }) {
                                 onChange={() => setSelectedId(option.id)}
                             />
                             <div className="option-info">
-                                <span className="opt-name">{option.name}</span>
+                                <span className="opt-name">{option.name} {option.isCustom && '⭐'}</span>
                                 <span className="opt-cal">{option && option.nutrition && option.nutrition.calories ? option.nutrition.calories + ' kcal' : ''}</span>
                             </div>
                         </label>
@@ -112,6 +118,22 @@ function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId }) {
         }
         
         .modal-header h3 { margin: 0; color: var(--primary-dark); }
+
+        .create-custom-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: transform 0.2s;
+        }
+        .create-custom-btn:hover {
+            transform: scale(1.02);
+        }
 
         .options-list {
             flex: 1;
@@ -173,3 +195,4 @@ function SwapModal({ isOpen, onClose, slot, onSave, options = [], currentId }) {
 }
 
 export default SwapModal;
+

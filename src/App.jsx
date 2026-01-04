@@ -208,6 +208,31 @@ function App() {
             color: var(--text-main);
         }
 
+        @media (max-width: 600px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+                padding: 1rem;
+                margin: 0.5rem;
+            }
+            .breadcrumb-container {
+                width: 100%;
+                justify-content: space-between;
+                font-size: 1rem;
+            }
+            .profile-pill {
+                align-self: flex-end;
+            }
+            .brand-root {
+                display: none; /* Hide brand on very small screens to save space if needed, or keep it */
+            }
+            /* Actually, let's keep it simple: Stack them */
+            .navbar { align-items: stretch; }
+            .breadcrumb-container { justify-content: flex-start; }
+            .profile-pill { position: absolute; top: 1rem; right: 1rem; }
+        }
+
         /* Override Grocery Modal to look like a page when likely wrapped */
         .grocery-page-wrapper .modal-overlay {
             position: static !important;
