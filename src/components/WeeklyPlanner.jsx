@@ -147,12 +147,8 @@ function WeeklyPlanner({ profile, recipes }) {
                 doc.text(nutritionStr, 14, yPos);
                 yPos += 5;
 
-                if (recipe.videoUrl) {
-                    doc.setTextColor(0, 122, 255);
-                    doc.textWithLink('Watch Video Tutorial ▶', 14, yPos, { url: recipe.videoUrl });
-                    doc.setTextColor(0);
-                    yPos += 7;
-                }
+                // Video Link removed as per request
+
 
                 // Ingredients
                 doc.setFont(undefined, 'bold');
@@ -171,8 +167,12 @@ function WeeklyPlanner({ profile, recipes }) {
                 yPos += 5;
 
                 if (recipe.instructions && recipe.instructions.length > 0) {
-                    recipe.instructions.forEach(inst => {
-                        const instLines = doc.splitTextToSize(inst, 180);
+                    recipe.instructions.forEach((inst, i) => {
+                        // Strip existing numbering like "1. " to avoid "1. 1. Step" or duplicates
+                        const cleanInst = inst.replace(/^\d+[\.\)]\s*/, '');
+                        const numberedInst = `${i + 1}. ${cleanInst}`;
+
+                        const instLines = doc.splitTextToSize(numberedInst, 180);
                         if (yPos + (instLines.length * 5) > 280) {
                             doc.addPage();
                             yPos = 20;
