@@ -1,25 +1,32 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Quicksand:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Premium Playful Palette */
-  --primary: #FF6B8B; /* Vibrant Rose */
-  --primary-light: #FF8EAC;
-  --secondary: #4ECDC4; /* Fresh Mint */
-  --secondary-dark: #3DAD9D;
-  --accent: #FFD93D; /* Sunny Yellow */
-  --bg-color: #F7F9FC; /* Soft Blue-Grey tint */
-  --text-main: #2D3436;
-  --text-light: #636E72;
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-  
-  --font-main: 'Nunito', sans-serif;
-  --font-heading: 'Quicksand', sans-serif;
-  
-  --radius-lg: 24px;
-  --radius-md: 16px;
+  /* MacOS / iOS Inspired Palette */
+  --primary: #007AFF;
+  /* System Blue */
+  --primary-light: #47A1FF;
+  --secondary: #5856D6;
+  /* System Indigo */
+  --secondary-dark: #4543A8;
+  --accent: #FF9500;
+  /* System Orange */
+
+  --bg-color: #F5F5F7;
+  /* Apple System Gray 6 */
+  --text-main: #1D1D1F;
+  /* Apple System Gray Label */
+  --text-light: #86868B;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  /* Softer shadow */
+
+  --font-main: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-lg: 20px;
+  --radius-md: 12px;
   --radius-sm: 8px;
 }
 
@@ -33,18 +40,19 @@ body {
   font-family: var(--font-main);
   background-color: var(--bg-color);
   color: var(--text-main);
-  line-height: 1.6;
+  line-height: 1.5;
   min-height: 100vh;
-  /* Subtle animated background gradient */
-  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-  background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
-}
-
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  /* Abstract Mesh Gradient */
+  background-image:
+    radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
+  background: #F5F5F7;
+  /* Fallback */
+  background: radial-gradient(circle at top left, #a8c0ff, #3f2b96 150%);
+  /* Simpler clean gradient */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  /* Clean Silver/Blue */
 }
 
 #root {
@@ -57,59 +65,74 @@ body {
 /* Glassmorphism Utilities */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
   border-radius: var(--radius-lg);
 }
 
+/* Buttons - iOS Style */
 .btn {
   border: none;
   cursor: pointer;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  padding: 0.8rem 1.5rem;
+  font-family: var(--font-main);
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
   border-radius: 50px;
-  transition: all 0.3s ease;
-  font-size: 1rem;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.btn:active {
+  transform: scale(0.96);
 }
 
 .btn-primary {
   background: var(--primary);
   color: white;
-  box-shadow: 0 4px 15px rgba(255, 107, 139, 0.4);
 }
 
 .btn-primary:hover {
-  background: var(--primary-light);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 107, 139, 0.6);
+  background: #0063CC;
+  /* Darker Blue */
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
 }
 
 .btn-secondary {
-  background: var(--secondary);
-  color: white;
-  box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+  background: rgba(118, 118, 128, 0.12);
+  /* Apple Gray Fill */
+  color: var(--primary);
 }
 
 .btn-secondary:hover {
-  background: var(--secondary-dark);
-  transform: translateY(-2px);
+  background: rgba(118, 118, 128, 0.24);
 }
 
 /* Typography */
-h1, h2, h3 {
-  font-family: var(--font-heading);
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-main);
 }
 
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
 
 /* Layout Containers */
 .container {
@@ -120,10 +143,33 @@ h3 { font-size: 1.5rem; }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
