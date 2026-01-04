@@ -1,7 +1,7 @@
 // Gemini API utility for recipe suggestions
 // User needs to provide their own API key (stored in localStorage)
 
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
 export const getApiKey = () => localStorage.getItem('gemini_api_key') || '';
 export const setApiKey = (key) => localStorage.setItem('gemini_api_key', key);
